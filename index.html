@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Insurance Fraud Detection - Presentation</title>
+    <style>
+        /* Design System Variables */
+        :root {
+            /* Primitive Color Tokens */
+            --color-white: rgba(255, 255, 255, 1);
+            --color-black: rgba(0, 0, 0, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-gray-300: rgba(167, 169, 169, 1);
+            --color-gray-400: rgba(119, 124, 124, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600: rgba(94, 82, 64, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+            --color-teal-400: rgba(45, 166, 178, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-teal-800: rgba(41, 150, 161, 1);
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-red-400-rgb: 255, 84, 89;
+            --color-orange-500-rgb: 168, 75, 47;
+            --color-orange-400-rgb: 230, 129, 97;
+            --color-bg-1: rgba(59, 130, 246, 0.08);
+            --color-bg-2: rgba(245, 158, 11, 0.08);
+            --color-bg-3: rgba(34, 197, 94, 0.08);
+            --color-bg-4: rgba(239, 68, 68, 0.08);
+            --color-bg-5: rgba(147, 51, 234, 0.08);
+            --color-bg-6: rgba(249, 115, 22, 0.08);
+            --color-bg-7: rgba(236, 72, 153, 0.08);
+            --color-bg-8: rgba(6, 182, 212, 0.08);
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-btn-primary-text: var(--color-cream-50);
+            --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-teal-500);
+            --color-warning: var(--color-orange-500);
+            --color-info: var(--color-slate-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+            --color-select-caret: rgba(var(--color-slate-900-rgb), 0.8);
+            --focus-ring: 0 0 0 3px var(--color-focus-ring);
+            --focus-outline: 2px solid var(--color-primary);
+            --status-bg-opacity: 0.15;
+            --status-border-opacity: 0.25;
+            --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 14px;
+            --font-size-lg: 16px;
+            --font-size-xl: 18px;
+            --font-size-2xl: 20px;
+            --font-size-3xl: 24px;
+            --font-size-4xl: 30px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 550;
+            --font-weight-bold: 600;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --letter-spacing-tight: -0.01em;
+            --space-0: 0;
+            --space-1: 1px;
+            --space-2: 2px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-10: 10px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --radius-sm: 6px;
+            --radius-base: 8px;
+            --radius-md: 10px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --shadow-inset-sm: inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.03);
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+            --container-sm: 640px;
+            --container-md: 768px;
+            --container-lg: 1024px;
+            --container-xl: 1280px;
+            
+            /* Custom presentation colors */
+            --ppt-navy: #1e3a8a;
+            --ppt-dark-blue: #1e40af;
+            --ppt-light-blue: #3b82f6;
+            --ppt-accent: #60a5fa;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-teal-300-rgb: 50, 184, 198;
+                --color-gray-300-rgb: 167, 169, 169;
+                --color-gray-200-rgb: 245, 245, 245;
+                --color-bg-1: rgba(29, 78, 216, 0.15);
+                --color-bg-2: rgba(180, 83, 9, 0.15);
+                --color-bg-3: rgba(21, 128, 61, 0.15);
+                --color-bg-4: rgba(185, 28, 28, 0.15);
+                --color-bg-5: rgba(107, 33, 168, 0.15);
+                --color-bg-6: rgba(194, 65, 12, 0.15);
+                --color-bg-7: rgba(190, 24, 93, 0.15);
+                --color-bg-8: rgba(8, 145, 178, 0.15);
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(var(--color-gray-300-rgb), 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-primary-active: var(--color-teal-800);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-secondary-active: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+                --color-error: var(--color-red-400);
+                --color-success: var(--color-teal-300);
+                --color-warning: var(--color-orange-400);
+                --color-info: var(--color-gray-300);
+                --color-focus-ring: rgba(var(--color-teal-300-rgb), 0.4);
+                --color-btn-primary-text: var(--color-slate-900);
+                --color-card-border: rgba(var(--color-gray-400-rgb), 0.2);
+                --color-card-border-inner: rgba(var(--color-gray-400-rgb), 0.15);
+            }
+        }
+
+        @font-face {
+            font-family: 'FKGroteskNeue';
+            src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slides-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 48px 64px;
+            background: var(--color-surface);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+        }
+
+        /* Slide 1 - Title Slide */
+        .slide-1 {
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--ppt-navy) 0%, var(--ppt-dark-blue) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .slide-1 .icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 32px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .slide-1 h1 {
+            font-size: 48px;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .slide-1 .subtitle {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 48px;
+        }
+
+        .slide-1 .presenter-info {
+            margin-top: 64px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* General Slide Styles */
+        .slide-header {
+            margin-bottom: 32px;
+        }
+
+        .slide-title {
+            font-size: 36px;
+            font-weight: var(--font-weight-bold);
+            color: var(--ppt-navy);
+            margin-bottom: 8px;
+            border-bottom: 4px solid var(--ppt-accent);
+            padding-bottom: 12px;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card h3 {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: var(--font-weight-bold);
+            color: var(--ppt-navy);
+        }
+
+        .callout-box {
+            background: var(--color-bg-4);
+            border-left: 4px solid var(--color-error);
+            padding: 16px;
+            border-radius: var(--radius-base);
+            margin: 16px 0;
+        }
+
+        .callout-box p {
+            font-size: 14px;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        /* Two Column Layout */
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .column h3 {
+            font-size: 20px;
+            color: var(--ppt-navy);
+            margin-bottom: 16px;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .column li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .column li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: var(--ppt-accent);
+            font-weight: bold;
+        }
+
+        /* Chart Image */
+        .chart-container {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .chart-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Metrics Summary */
+        .metrics-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .metrics-box {
+            background: var(--color-bg-1);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .metrics-box h4 {
+            font-size: 16px;
+            color: var(--ppt-navy);
+            margin-bottom: 12px;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .metrics-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .metrics-box li {
+            padding: 6px 0;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .metrics-box .metric-label {
+            color: var(--color-text);
+        }
+
+        .metrics-box .metric-value {
+            font-weight: var(--font-weight-semibold);
+            color: var(--ppt-navy);
+        }
+
+        /* Insights Section */
+        .insights-section {
+            margin-bottom: 24px;
+        }
+
+        .insights-section h3 {
+            font-size: 20px;
+            color: var(--ppt-navy);
+            margin-bottom: 12px;
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .insights-section ul, .insights-section ol {
+            padding-left: 24px;
+        }
+
+        .insights-section li {
+            padding: 6px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navigation {
+            padding: 20px 64px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            padding: 8px 16px;
+            background: var(--ppt-navy);
+            color: white;
+            border: none;
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: var(--font-weight-medium);
+            transition: background 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: var(--ppt-dark-blue);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .slide-indicators {
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-border);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .indicator.active {
+            background: var(--ppt-navy);
+        }
+
+        .slide-number {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 24px;
+            }
+
+            .navigation {
+                padding: 16px 24px;
+            }
+
+            .slide-title {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .slide-1 h1 {
+                font-size: 32px;
+            }
+
+            .slide-1 .subtitle {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slides-wrapper">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide slide-1 active">
+                <div class="icon">🛡️</div>
+                <h1>Car Insurance Fraud Detection</h1>
+                <div class="subtitle">Starting with the Basics - A Logistic Regression Baseline</div>
+                <div class="presenter-info">
+                    More models coming soon!
+                </div>
+            </div>
+
+            <!-- Slide 2: Dataset Overview -->
+            <div class="slide slide-2">
+                <div class="slide-header">
+                    <h2 class="slide-title">The Search for the Right Data</h2>
+                </div>
+                <div class="slide-content">
+                    <p style="font-size: 16px; margin-bottom: 24px; line-height: 1.6; font-weight: var(--font-weight-medium);">
+                        Finding the perfect dataset took most of the time, but it was worth it!
+                    </p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Got to Work With</h3>
+                            <div class="value">30,000 Claims</div>
+                            <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">24 different features to play around with</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Target Question</h3>
+                            <div class="value">fraud_reported</div>
+                            <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">Did they commit fraud or not?</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Legit Claims</h3>
+                            <div class="value">26,560 (88.5%)</div>
+                            <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">Most people are honest</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Fraudulent Ones</h3>
+                            <div class="value">3,440 (11.5%)</div>
+                            <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 4px;">The troublemakers we want to catch</p>
+                        </div>
+                    </div>
+
+                    <div class="callout-box">
+                        <p>The imbalanced data was a challenge, but that's real-world stuff! Used 80-20 train-test split to keep things fair.</p>
+                    </div>
+
+                    <div class="chart-container">
+                        <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/4c8d8d925492e79ba7a604e026b99717/d58da3bc-d8fd-43ad-9944-e31df9da8b83/610862c7.png" alt="Class Distribution Chart">
+                    </div>
+
+                    <p style="font-size: 14px; margin-top: 16px; line-height: 1.6;">
+                        <strong>Note:</strong> Most of my time was spent finding the correct dataset to experiment the most out of this! The modeling part came after getting this foundation right.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Feature Engineering & Model Architecture -->
+            <div class="slide slide-3">
+                <div class="slide-header">
+                    <h2 class="slide-title">What I Did with the Data</h2>
+                </div>
+                <div class="slide-content">
+                    <div class="two-columns">
+                        <div class="column">
+                            <h3>📊 Data Prep</h3>
+                            <ul>
+                                <li>Started with 15 numeric features (ages, amounts, that kind of thing)</li>
+                                <li>Plus 11 categorical ones (states, occupations, etc.)</li>
+                                <li>Broke down dates into useful parts (day, month, which day of week)</li>
+                                <li>Used frequency encoding when there were too many categories</li>
+                                <li>One-hot encoded the simpler categorical stuff</li>
+                                <li>Filled in missing values and scaled everything properly</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h3>🤖 The Baseline Model</h3>
+                            <ul>
+                                <li>Went with Logistic Regression to start</li>
+                                <li>Used 'balanced' class weights to handle the imbalance</li>
+                                <li>Solver: liblinear (works well for this)</li>
+                                <li>1000 max iterations</li>
+                                <li>80-20 train-test split</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 32px; background: var(--color-bg-5); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-card-border);">
+                        <h4 style="font-size: 16px; margin-bottom: 12px; color: var(--ppt-navy);">💡 This is just the baseline - Random Forest is next on the list for experimentation!</h4>
+                        <p style="font-size: 14px; line-height: 1.6; margin: 0;">
+                            Since this is the baseline model and there's more to come yet, I'll be adding Random Forest to try experimentation around non-linear patterns and feature interactions. Keeping it simple for now to see what works.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Model Performance -->
+            <div class="slide slide-4">
+                <div class="slide-header">
+                    <h2 class="slide-title">How It's Performing</h2>
+                </div>
+                <div class="slide-content">
+                    <div class="chart-container">
+                        <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/4c8d8d925492e79ba7a604e026b99717/ca6f7cd1-9ccd-4f2d-b060-a9fb3a61e3a2/ac19a464.png" alt="Model Performance Metrics">
+                    </div>
+
+                    <div class="metrics-summary">
+                        <div class="metrics-box">
+                            <h4>📈 What the Numbers Say</h4>
+                            <ul>
+                                <li>
+                                    <span class="metric-label">Got 67% accuracy overall</span>
+                                    <span class="metric-value">67%</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">Precision is low for now</span>
+                                    <span class="metric-value">21%</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">Catching 65% of fraud cases</span>
+                                    <span class="metric-value">65%</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">F1-Score</span>
+                                    <span class="metric-value">31%</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">ROC AUC - decent starting point</span>
+                                    <span class="metric-value">0.70</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="metrics-box">
+                            <h4>🎯 The Confusion Matrix Story</h4>
+                            <ul>
+                                <li>
+                                    <span class="metric-label">Caught correctly</span>
+                                    <span class="metric-value">447</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">Missed (need to improve)</span>
+                                    <span class="metric-value">241</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">False alarms</span>
+                                    <span class="metric-value">1,713</span>
+                                </li>
+                                <li>
+                                    <span class="metric-label">Got legit claims right</span>
+                                    <span class="metric-value">3,599</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="callout-box" style="background: var(--color-bg-3); border-left-color: var(--color-success); margin-top: 20px;">
+                        <p>The recall is solid (that's the important one!), but there's definitely room to improve. Precision is low (21%), but that's okay for now - better safe than sorry in fraud detection.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Insights & Recommendations -->
+            <div class="slide slide-5">
+                <div class="slide-header">
+                    <h2 class="slide-title">What I Learned &amp; What's Next</h2>
+                </div>
+                <div class="slide-content">
+                    <div class="two-columns">
+                        <div class="column">
+                            <div class="insights-section">
+                                <h3>💡 What's Working</h3>
+                                <ul>
+                                    <li>The model's catching most fraud cases (65% recall)</li>
+                                    <li>Handled the class imbalance pretty well with balanced weights</li>
+                                    <li>ROC score shows it can tell fraud from legit claims</li>
+                                    <li>Low precision means lots of false alarms, but better safe than sorry in fraud detection</li>
+                                    <li>Logistic Regression keeps things simple and explainable</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="insights-section">
+                                <h3>🚀 What's Coming</h3>
+                                <ul>
+                                    <li>Experiment with Random Forest next - should handle non-linear patterns better</li>
+                                    <li>Try some threshold tuning to balance precision and recall</li>
+                                    <li>Maybe create some new features based on domain knowledge</li>
+                                    <li>Could look into XGBoost if Random Forest shows promise</li>
+                                    <li>Eventually deploy this as a screening tool where humans review flagged cases</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 24px; background: var(--color-bg-2); padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-card-border);">
+                        <h4 style="font-size: 16px; margin-bottom: 12px; color: var(--ppt-navy);">📚 Bottom Line</h4>
+                        <p style="font-size: 14px; line-height: 1.6; margin: 0;">
+                            Most time went into finding and understanding this dataset - the modeling part was the fun part! This baseline gives us something solid to compare against when we start experimenting with Random Forest and other approaches. The journey's just getting started.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+                <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+            </div>
+            <div class="slide-indicators">
+                <span class="indicator active" onclick="goToSlide(0)"></span>
+                <span class="indicator" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+                <span class="indicator" onclick="goToSlide(4)"></span>
+            </div>
+            <div class="slide-number">
+                <span id="currentSlide">1</span> / 5
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const totalSlides = 5;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.slide');
+            const indicators = document.querySelectorAll('.indicator');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const currentSlideDisplay = document.getElementById('currentSlide');
+
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            // Remove active from all indicators
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+
+            // Show current slide
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+            currentSlideDisplay.textContent = index + 1;
+
+            // Update button states
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            if (currentSlideIndex < 0) currentSlideIndex = 0;
+            if (currentSlideIndex >= totalSlides) currentSlideIndex = totalSlides - 1;
+            showSlide(currentSlideIndex);
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                changeSlide(1);
+            }
+            if (touchEndX > touchStartX + 50) {
+                changeSlide(-1);
+            }
+        }
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
